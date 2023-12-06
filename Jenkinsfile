@@ -16,6 +16,7 @@ pipeline {
         script {
           // Use Docker Hub credentials to push the Docker image
           docker.withRegistry('https://registry.hub.docker.com', '897c9bb0-8fee-4c2d-8db3-ebbfe78695dc') {
+            // Tag the Docker image before pushing
             docker.image('my-node-app:latest').push()
           }
         }
@@ -26,7 +27,7 @@ pipeline {
       steps {
         script {
           // Run the Docker container
-          docker.image('my-node-app:latest').run('-p 3000:3000 -d')
+          docker.image('my-node-app:latest').withRun('-p 3000:3000 -d')
         }
       }
     }
