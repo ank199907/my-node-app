@@ -15,9 +15,14 @@ pipeline {
       steps {
         script {
           // Use Docker Hub credentials to push the Docker image
-          docker.withRegistry('https://registry.hub.docker.com', '897c9bb0-8fee-4c2d-8db3-ebbfe78695dc') {
-            // Tag the Docker image before pushing
-            docker.image('my-node-app:latest').push()
+          withDockerRegistry([credentialsId: '897c9bb0-8fee-4c2d-8db3-ebbfe78695dc', url: 'https://registry.hub.docker.com']) {
+            docker.withRegistry('', 'DOCKER_HUB_CREDENTIALS') {
+              // Your Docker-related steps here
+              sh "echo \$SeCure@321#$ | docker login -u \$saaru789 --password-stdin"
+              
+              // Tag the Docker image before pushing
+              docker.image('my-node-app:latest').push()
+            }
           }
         }
       }
